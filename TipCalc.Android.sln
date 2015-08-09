@@ -50,7 +50,4 @@ Global
 		{541E5706-D876-4384-AB14-501FCB3166A3}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{541E5706-D876-4384-AB14-501FCB3166A3}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 	EndGlobalSection
-	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = src\TipCalc\TipCalc.csproj
-	EndGlobalSection
 EndGlobal
