@@ -1,6 +1,7 @@
-﻿using MonoTouch.Foundation;
-using MonoTouch.UIKit;
+﻿using Foundation;
+using UIKit;
 using Xamarin.Forms;
+using Xamarin.Forms.Platform.iOS;
 
 namespace TipCalc.iOS
 {
@@ -8,39 +9,22 @@ namespace TipCalc.iOS
     // User Interface of the application, as well as listening (and optionally responding) to 
     // application events from iOS.
     [Register("AppDelegate")]
-    public partial class AppDelegate : UIApplicationDelegate
+	public partial class AppDelegate : FormsApplicationDelegate
     {
         // class-level declarations
         UIWindow window;
 
-        //
-        // This method is invoked when the application has loaded and is ready to run. In this 
-        // method you should instantiate the window, load the UI into it and then make the window
-        // visible.
-        //
-        // You have 17 seconds to return from this method, or iOS will terminate your application.
-        //
-        public override bool FinishedLaunching(UIApplication app, NSDictionary options)
-        {
-            Forms.Init();
+		public override bool FinishedLaunching (UIApplication app, NSDictionary options)
+		{
+			global::Xamarin.Forms.Forms.Init ();
 
-            window = new UIWindow(UIScreen.MainScreen.Bounds);
+			LoadApplication (new App ());  // method is new in 1.3
 
-			Forms.ViewInitialized += (sender, e) => 
-			{
-				if (!string.IsNullOrWhiteSpace(e.View.StyleId))
-					e.NativeView.AccessibilityIdentifier = e.View.StyleId;
-			};
+			#if DEBUG
+			Xamarin.Calabash.Start();
+			#endif
 
-            window.RootViewController = App.GetMainPage().CreateViewController();
-
-            window.MakeKeyAndVisible();
-
-            #if DEBUG
-            Xamarin.Calabash.Start();
-            #endif
-
-            return true;
-        }
+			return base.FinishedLaunching (app, options);
+		}
     }
 }

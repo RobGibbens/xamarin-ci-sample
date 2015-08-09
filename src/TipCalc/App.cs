@@ -3,11 +3,11 @@ using Xamarin.Forms;
 
 namespace TipCalc
 {
-    public class App
+    public class App : Application
     {
-        public static Page GetMainPage()
-        {
-            return new TipCalcPage();
-        }
+		public App ()
+		{
+			MainPage = new TipCalcPage ();
+		}
     }
 }
