@@ -52,6 +52,7 @@
     <IpaPackageName>
     </IpaPackageName>
     <MtouchArch>ARMv7</MtouchArch>
+    <CodesignProvision>4d6e0291-f009-45ab-82e1-825103bd348c</CodesignProvision>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <DebugType>none</DebugType>
@@ -66,6 +67,7 @@
     <IpaPackageName>
     </IpaPackageName>
     <MtouchArch>ARMv7, ARM64</MtouchArch>
+    <CodesignProvision>4d6e0291-f009-45ab-82e1-825103bd348c</CodesignProvision>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Ad-Hoc|iPhone' ">
     <DebugType>none</DebugType>
@@ -82,6 +84,7 @@
     <MtouchI18n>
     </MtouchI18n>
     <MtouchArch>ARMv7, ARM64</MtouchArch>
+    <CodesignProvision>3d455599-10cc-4b08-b572-d11bab5d036f</CodesignProvision>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'AppStore|iPhone' ">
     <DebugType>none</DebugType>
@@ -93,6 +96,7 @@
     <CodesignKey>iPhone Distribution</CodesignKey>
     <AssemblyName>TipCalciOS</AssemblyName>
     <MtouchArch>ARMv7, ARM64</MtouchArch>
+    <CodesignProvision>dca3ffbc-2e1f-4c3f-970f-01be22871022</CodesignProvision>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />

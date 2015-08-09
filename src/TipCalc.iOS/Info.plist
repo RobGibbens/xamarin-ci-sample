@@ -43,6 +43,6 @@
 		<string>Icon-Small</string>
 	</array>
 	<key>CFBundleIdentifier</key>
-	<string>com.gregshackles.tipcalc</string>
+	<string>com.xamarin.tipcalc.rob01</string>
 </dict>
 </plist>
