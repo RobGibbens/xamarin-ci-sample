@@ -1,55 +1,45 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 using NUnit.Framework;
 using Xamarin.UITest;
+using Xamarin.UITest.Queries;
 
-namespace TipCalc.UITests
+namespace TestTest
 {
-    [TestFixture]
-    public class TipCalculationTests
-    {
-        private IApp _app;
+	[TestFixture (Platform.Android)]
+	[TestFixture (Platform.iOS)]
+	public class Tests
+	{
+		IApp app;
+		Platform platform;
 
-        [SetUp]
-        public void SetUp()
-        {
-            switch (TestEnvironment.Platform)
-            {
-                case TestPlatform.Local:
-                    var appFile = 
-                        new DirectoryInfo(Path.Combine("..", "..", "testapps"))
-                            .GetFileSystemInfos()
-                            .OrderByDescending(file => file.LastWriteTimeUtc)
-                            .First(file => file.Name.EndsWith(".app") || file.Name.EndsWith(".apk"));
+		public Tests (Platform platform)
+		{
+			this.platform = platform;
+		}
 
-                    _app = appFile.Name.EndsWith(".app")
-                        ? ConfigureApp.iOS.AppBundle(appFile.FullName).StartApp() as IApp
-                        : ConfigureApp.Android.ApkFile(appFile.FullName).StartApp();
-                    break;
-                case TestPlatform.TestCloudiOS:
-                    _app = ConfigureApp.iOS.StartApp();
-                    break;
-                case TestPlatform.TestCloudAndroid:
-                    _app = ConfigureApp.Android.StartApp();
-                    break;
-            }
-        }
+		[SetUp]
+		public void BeforeEachTest ()
+		{
+			app = AppInitializer.StartApp (platform);
+		}
 
-        [Test]
-        public void CalculateTip()
-        {
+		[Test]
+		public void CalculateTip()
+		{
 			var subTotal = 10M;
 			var postTaxTotal = 12M;
 
-			_app.EnterText(e => e.Marked("SubTotal"), subTotal.ToString());
-			_app.Screenshot("When I enter a subtotal");
+			app.EnterText(e => e.Marked("SubTotal"), subTotal.ToString());
+			app.Screenshot("When I enter a subtotal");
 
-			_app.EnterText(e => e.Marked("PostTaxTotal"), postTaxTotal.ToString());
-			_app.Screenshot("And I enter the post-tax total");
+			app.EnterText(e => e.Marked("PostTaxTotal"), postTaxTotal.ToString());
+			app.Screenshot("And I enter the post-tax total");
 
-			var tipPercent = decimal.Parse(_app.Query(e => e.Marked("TipPercent")).Single().Text) / 100;
-			var tipAmount = decimal.Parse(_app.Query(e => e.Marked("TipAmount")).Single().Text.Substring(1));
-			var total = decimal.Parse(_app.Query(e => e.Marked("Total")).Single().Text.Substring(1));
+			var tipPercent = decimal.Parse(app.Query(e => e.Marked("TipPercent")).Single().Text) / 100;
+			var tipAmount = decimal.Parse(app.Query(e => e.Marked("TipAmount")).Single().Text.Substring(1));
+			var total = decimal.Parse(app.Query(e => e.Marked("Total")).Single().Text.Substring(1));
 
 			var expectedTipAmount = subTotal * tipPercent;
 			Assert.AreEqual(expectedTipAmount, tipAmount);
@@ -57,8 +47,8 @@ namespace TipCalc.UITests
 			var expectedTotal = postTaxTotal + expectedTipAmount;
 			Assert.AreEqual(expectedTotal, total);
 
-			_app.Screenshot("Then the tip and total are calculated correctly");
-        }
-    }
+			app.Screenshot("Then the tip and total are calculated correctly");
+		}
+	}
 }
 

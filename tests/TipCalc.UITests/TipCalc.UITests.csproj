@@ -37,6 +37,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppInitializer.cs" />
     <Compile Include="TipCalculationTests.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

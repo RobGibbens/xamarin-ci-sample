@@ -39,8 +39,12 @@ let RunTestCloudTests appFile deviceList =
     MSBuild "tests/TipCalc.UITests/bin/Debug" "Build" [ ("Configuration", "Debug"); ("Platform", "Any CPU") ] [ "tests/TipCalc.UITests/TipCalc.UITests.sln" ] |> ignore
 
     let testCloudToken = Environment.GetEnvironmentVariable("env.TestCloudApiToken")
-    let args = String.Format(@"submit ""{0}"" {1} --devices {2} --series ""master"" --locale ""en_US"" --assembly-dir ""tests/TipCalc.UITests/bin/Debug"" --nunit-xml tests/TipCalc.UITests/testapps/testresults.xml", appFile, testCloudToken, deviceList)
+    //let testCloudToken = "10591f4e6d90c77a4dc7e3a37d7fafc2"
 
-    Exec "packages/Xamarin.UITest.0.6.1/tools/test-cloud.exe" args
+    let args = String.Format(@"submit ""{0}"" {1} --devices 1726dcc9 --series ""master"" --locale ""en_US"" --user rob.gibbens@xamarin.com --fixture-chunk --assembly-dir ""tests/TipCalc.UITests/bin/Debug"" --nunit-xml tests/TipCalc.UITests/testapps/testresults.xml", appFile, testCloudToken)
+
+    System.Console.WriteLine("packages/Xamarin.UITest.1.0.0/tools/test-cloud.exe {0}", args)
+
+    Exec "packages/Xamarin.UITest.1.0.0/tools/test-cloud.exe" args
 
     TeamCityHelper.sendTeamCityNUnitImport "Apps/tests/apps/testresults.xml"
