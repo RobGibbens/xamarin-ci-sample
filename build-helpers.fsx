@@ -29,6 +29,8 @@ let RunUITests appPath =
 
     Directory.Move(appPath, testAppPath)
 
+    System.Console.WriteLine("Restoring packages from TipCalc.UITests.sln")
+
     RestorePackages "tests/TipCalc.UITests/TipCalc.UITests.sln"
 
     MSBuild "tests/TipCalc.UITests/bin/Debug" "Build" [ ("Configuration", "Debug"); ("Platform", "Any CPU") ] [ "tests/TipCalc.UITests/TipCalc.UITests.sln" ] |> ignore
@@ -36,10 +38,14 @@ let RunUITests appPath =
     RunNUnitTests "tests/TipCalc.UITests/bin/Debug/TipCalc.UITests.dll" "tests/TipCalc.UITests/bin/Debug/testresults.xml"
 
 let RunTestCloudTests appFile deviceList =
+    System.Console.WriteLine("Restoring packages from TipCalc.UITests.sln")
+    
+    RestorePackages "tests/TipCalc.UITests/TipCalc.UITests.sln"
+
     MSBuild "tests/TipCalc.UITests/bin/Debug" "Build" [ ("Configuration", "Debug"); ("Platform", "Any CPU") ] [ "tests/TipCalc.UITests/TipCalc.UITests.sln" ] |> ignore
 
-    let testCloudToken = Environment.GetEnvironmentVariable("env.TestCloudApiToken")
-    //let testCloudToken = "10591f4e6d90c77a4dc7e3a37d7fafc2"
+    //let testCloudToken = Environment.GetEnvironmentVariable("env.TestCloudApiToken")
+    let testCloudToken = "10591f4e6d90c77a4dc7e3a37d7fafc2"
 
     let args = String.Format(@"submit ""{0}"" {1} --devices 1726dcc9 --series ""master"" --locale ""en_US"" --user rob.gibbens@xamarin.com --fixture-chunk --assembly-dir ""tests/TipCalc.UITests/bin/Debug"" --nunit-xml tests/TipCalc.UITests/testapps/testresults.xml", appFile, testCloudToken)
 
